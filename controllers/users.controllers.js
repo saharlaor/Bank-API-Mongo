@@ -68,17 +68,22 @@ const makeDeposit = (req, res) => {
 };
 
 const updateUserCredit = (req, res) => {
-  const users = utils.parseUsers();
-  const user = users.find((item) => item.id === parseInt(req.params.id));
-  if (!user) {
-    res.status(404).send(`User ${req.params.id} not found`);
-  } else if (req.body.amount < 0 || !req.body.amount) {
-    res.status(400).send("Invalid amount");
-  } else {
-    user.credit = req.body.amount;
-    res.status(200).send(user);
+  try {
+    const user = Users.findOne({ _id: req.params.id });
+    // If _id is empty there is no user
+    if (!user._id) {
+      throw Error({ status: 404, message: `User ${req.params.id} not found` });
+    } else if (req.body.amount < 0 || !req.body.amount) {
+      throw Error({ status: 400, message: `Invalid amount` });
+    } else {
+      user.credit = req.body.amount;
+      res.status(200).send(user);
+    }
+  } catch (err) {
+    err.status
+      ? res.status(err.status).send(err.message)
+      : res.status(500).send(`An error occurred in the server\n\n\n${err}`);
   }
-  utils.writeUsers(users);
 };
 
 const makeWithdraw = (req, res) => {
