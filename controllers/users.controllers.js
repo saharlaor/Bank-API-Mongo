@@ -108,24 +108,30 @@ const makeWithdraw = (req, res) => {
 };
 
 const makeTransfer = (req, res) => {
-  const users = utils.parseUsers();
-  const fromUser = users.find((item) => item.id === parseInt(req.body.fromID));
-  const toUser = users.find((item) => item.id === parseInt(req.body.toID));
-  if (!fromUser) {
-    res.status(404).send(`User ${req.body.fromID} not found`);
-  } else if (!toUser) {
-    res.status(404).send(`User ${req.body.toID} not found`);
-  } else if (req.body.amount < 0 || !req.body.amount) {
-    res.status(400).send("Invalid amount");
-  } else if (fromUser.credit + fromUser.cash - req.body.amount < 0) {
-    res.status(400).send("Not enough credit");
-  } else {
-    fromUser.cash -= req.body.amount;
-    toUser.cash += req.body.amount;
-    res.status(200).send({ fromUser, toUser });
+  try {
+    const fromUser = Users.findOne({ _id: req.body.fromID });
+    const toUser = Users.findOne({ _id: req.body.toID });
+    if (!fromUser._id) {
+      throw Error({
+        status: 404,
+        message: `User ${req.body.fromID} not found`,
+      });
+    } else if (!toUser._id) {
+      throw Error({ status: 404, message: `User ${req.body.toID} not found` });
+    } else if (req.body.amount < 0 || !req.body.amount) {
+      throw Error({ status: 400, message: `Invalid amount` });
+    } else if (fromUser.credit + fromUser.cash - req.body.amount < 0) {
+      throw Error({ status: 400, message: `Insufficient credit` });
+    } else {
+      fromUser.cash -= req.body.amount;
+      toUser.cash += req.body.amount;
+      res.status(200).send({ fromUser, toUser });
+    }
+  } catch (err) {
+    err.status
+      ? res.status(err.status).send(err.message)
+      : res.status(500).send(`An error occurred in the server\n\n\n${err}`);
   }
-
-  utils.writeUsers(users);
 };
 
 module.exports = {
