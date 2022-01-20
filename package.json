@@ -1,6 +1,32 @@
 {
   "dependencies": {
+    "axios": "^0.25.0",
+    "cors": "^2.8.5",
     "dotenv": "^11.0.0",
-    "express": "^4.17.2"
-  }
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7",
+    "path": "^0.12.7"
+  },
+  "name": "bank-api-mongo",
+  "description": "Bank API weekend project using NodeJS, Express &amp; JSON",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon ./app.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saharlaor/Bank-API-Mongo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saharlaor/Bank-API-Mongo/issues"
+  },
+  "homepage": "https://github.com/saharlaor/Bank-API-Mongo#readme"
 }
