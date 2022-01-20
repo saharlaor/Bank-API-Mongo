@@ -1,9 +1,15 @@
-const utils = require("./utils");
-const { validateUserExists } = require("./helpers");
+const { Users } = require("../models/Users.model");
+const { validateUserExists } = require("../helpers");
+require("../db/mongoose");
 
 // Functions
-const getAllUsers = (req, res) => {
-  res.send(utils.parseUsers());
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await Users.find();
+    res.send(users);
+  } catch (err) {
+    res.status(500).send(`An error occurred in the server\n\n\n${err}`);
+  }
 };
 
 const getUser = (req, res) => {

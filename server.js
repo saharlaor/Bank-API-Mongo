@@ -12,6 +12,7 @@ const {
 
 // Constants
 require("dotenv").config();
+const PORT = process.env.PORT || 5000;
 
 // Setup server
 const app = express();
@@ -19,20 +20,18 @@ app.use(express.json());
 
 // Endpoints
 // GET
-app.get("/users", getAllUsers);
+app.get("/api/users", getAllUsers);
 
-app.get("/user/:id", getUser);
+app.get("/api/user/:id", getUser);
 
 // POST
-app.post("/user/", createUser);
+app.post("/api/user/", createUser);
 
 // PUT
-app.put("/user/deposit/:id", makeDeposit);
-app.put("/user/credit/:id", updateUserCredit);
-app.put("/user/withdraw/:id", makeWithdraw);
-app.put("/user/transfer/", makeTransfer);
+app.put("/api/user/deposit/:id", makeDeposit);
+app.put("/api/user/credit/:id", updateUserCredit);
+app.put("/api/user/withdraw/:id", makeWithdraw);
+app.put("/api/user/transfer/", makeTransfer);
 
 // Start server
-app.listen(process.env.PORT, () =>
-  console.log(`Server listening on ${process.env.PORT}`)
-);
+app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
