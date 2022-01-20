@@ -13,12 +13,15 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUser = (req, res) => {
-  const user = utils
-    .parseUsers()
-    .find((item) => item.id === parseInt(req.params.id));
-  user
-    ? res.send(user)
-    : res.status(404).send(`User ${req.params.id} not found`);
+  try {
+    const user = Users.find({ _id: req.params.id });
+    if (user) return res.send(user);
+    throw Error({ status: 404, message: `User ${req.params.id} not found` });
+  } catch (err) {
+    err.status
+      ? res.status(err.status).send(err.message)
+      : res.status(500).send(`An error occurred in the server\n\n\n${err}`);
+  }
 };
 
 const createUser = (req, res) => {
