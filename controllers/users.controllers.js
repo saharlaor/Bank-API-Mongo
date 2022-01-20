@@ -25,20 +25,27 @@ const getUser = (req, res) => {
 };
 
 const createUser = (req, res) => {
-  const users = utils.parseUsers();
-  const newUser = {
-    id: req.body.id,
-    cash: 0,
-    credit: 0,
-  };
-  if (!validateUserExists(users, newUser)) {
-    users.push(newUser);
-    res.status(200).send(newUser);
-  } else {
-    res.status(400).send("400 - User already exists");
+  try {
+    const newUser = new Users({
+      name: req.body.name,
+      cash: 0,
+      credit: 0,
+    });
+    newUser.save((err, data) => {
+      if (err) {
+        throw Error({
+          status: 400,
+          message: `User ${req.params.id} alreadyExists`,
+        });
+      } else {
+        res.status(201).send(data);
+      }
+    });
+  } catch (err) {
+    err.status
+      ? res.status(err.status).send(err.message)
+      : res.status(500).send(`An error occurred in the server\n\n\n${err}`);
   }
-
-  utils.writeUsers(users);
 };
 
 const makeDeposit = (req, res) => {
