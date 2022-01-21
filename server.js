@@ -39,8 +39,8 @@ app.put("/api/users/withdraw/:id", makeWithdraw);
 app.put("/api/users/transfer/", makeTransfer);
 
 // Fallback
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(publicPath, "index.html"));
+app.get("/*", (req, res) => {
+  res.sendFile(path.resolve(PUBLIC_PATH, "index.html"));
 });
 
 // Start server
