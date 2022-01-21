@@ -12,4 +12,4 @@ mongoose.connect(URL, {
   useUnifiedTopology: true,
 });
 
-module.exports.mongoClient = { client };
+// module.exports.mongoClient = { client };

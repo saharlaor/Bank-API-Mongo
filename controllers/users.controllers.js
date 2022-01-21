@@ -1,5 +1,4 @@
 const { Users } = require("../models/Users.model");
-const { validateUserExists } = require("../helpers");
 require("../db/mongoose");
 
 // Functions
