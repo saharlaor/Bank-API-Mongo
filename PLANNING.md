@@ -1,9 +1,17 @@
 # Planning
 
-## Ready JSON file
-   1. Create file if non-existent
-   2. Function for reading file and convert to object
-   3. Function for writing object to file
+## Switch JSON file with MongoDB atlas database
+   1. Setup the atlas bankUsers database
+   2. Create the users model
+   3. Go through the controllers and switch every reference to the json file with MongoDB equivalent
+
+## Frontend client
+Make a react app client for the bank user data
+
+#### Features -
+`Homepage` - Welcome page
+`Users`   - A page to search for a user
+`Actions`  - A page to do actions on a user
 
 ## Endpoints
 #### `POST - /user/` - 
