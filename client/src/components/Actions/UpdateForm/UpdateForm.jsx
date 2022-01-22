@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/api";
 import "./UpdateForm.css";
@@ -7,7 +7,26 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
   const [mode, setMode] = useState("deposit");
   const [amount, setAmount] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const [transferId, setTransferId] = useState("");
+  const [results, setResults] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      try {
+        const { data } = await api.get(`/users/`);
+        setResults(data);
+        console.log("data", data);
+      } catch (err) {
+        setResults([]);
+        console.log(err);
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   const handleModeChange = (e) => {
     setMode(e.target.value);
@@ -16,6 +35,11 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
+  };
+
+  const handleTransferIdChange = (e) => {
+    console.log("e.target.value", /^[0-9a-f]{0,24}$/.test(e.target.value));
+    /^[0-9a-f]{0,24}$/i.test(e.target.value) && setTransferId(e.target.value);
   };
 
   const handleDepositClick = async (e) => {
@@ -39,6 +63,24 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
       return setErrorMessage("Invalid Amount");
     await api.put(`/users/credit/${_id}`, { amount: parseInt(amount) });
     navigate("/users");
+  };
+
+  const handleTransferClick = async (e) => {
+    e.preventDefault();
+    try {
+      if (amount < 0 || amount > cash + credit)
+        return setErrorMessage("Invalid Amount");
+      if (transferId.length !== 24) return setErrorMessage("Invalid Id");
+      await api.put(`/users/transfer/`, {
+        fromID: _id,
+        toID: transferId,
+        amount: parseInt(amount),
+      });
+      navigate("/users");
+    } catch (err) {
+      console.dir("err", err);
+      setErrorMessage(err.message);
+    }
   };
 
   const generateForm = () => {
@@ -110,8 +152,25 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
             <label htmlFor="id" autoFocus>
               ID:
             </label>
-            <input type="text" name="id" id="id" min={Math.max(0, cash * -1)} />
-            <button>Transfer</button>
+            <select
+              name="id"
+              id="id"
+              maxLength={24}
+              value={transferId}
+              onChange={handleTransferIdChange}>
+              <option value="" disabled>
+                Pick user to transfer to
+              </option>
+              {results &&
+                results
+                  .filter((item) => item._id !== _id)
+                  .map((res) => (
+                    <option key={res._id} value={res._id}>
+                      {res.name}
+                    </option>
+                  ))}
+            </select>
+            <button onClick={handleTransferClick}>Transfer</button>
           </>
         );
 
