@@ -58,6 +58,7 @@ const makeDeposit = async (req, res) => {
     } else {
       user.cash += req.body.amount;
       res.status(200).send(user);
+      user.save();
     }
   } catch (err) {
     err.status
@@ -77,6 +78,7 @@ const updateUserCredit = async (req, res) => {
     } else {
       user.credit = req.body.amount;
       res.status(200).send(user);
+      user.save();
     }
   } catch (err) {
     err.status
@@ -98,6 +100,7 @@ const makeWithdraw = async (req, res) => {
     } else {
       user.cash -= req.body.amount;
       res.status(200).send(user);
+      user.save();
     }
   } catch (err) {
     err.status
@@ -125,6 +128,8 @@ const makeTransfer = async (req, res) => {
       fromUser.cash -= req.body.amount;
       toUser.cash += req.body.amount;
       res.status(200).send({ fromUser, toUser });
+      fromUser.save();
+      toUser.save();
     }
   } catch (err) {
     err.status
