@@ -6,7 +6,7 @@ import "./UpdateForm.css";
 function UpdateForm({ user: { _id, name, cash, credit } }) {
   const [mode, setMode] = useState("deposit");
   const [amount, setAmount] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("e");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleModeChange = (e) => {
@@ -30,6 +30,14 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
     if (amount < 0 || amount > cash + credit)
       return setErrorMessage("Invalid Amount");
     await api.put(`/users/withdraw/${_id}`, { amount: parseInt(amount) });
+    navigate("/users");
+  };
+
+  const handleCreditClick = async (e) => {
+    e.preventDefault();
+    if (amount < Math.max(0, cash * -1))
+      return setErrorMessage("Invalid Amount");
+    await api.put(`/users/credit/${_id}`, { amount: parseInt(amount) });
     navigate("/users");
   };
 
@@ -82,7 +90,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
               min={Math.max(0, cash * -1)}
               max={cash + credit}
             />
-            <button>Set Credit</button>
+            <button onClick={handleCreditClick}>Set Credit</button>
           </>
         );
       case "transfer":
@@ -102,13 +110,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
             <label htmlFor="id" autoFocus>
               ID:
             </label>
-            <input
-              type="text"
-              name="id"
-              id="id"
-              min={Math.max(0, cash * -1)}
-              max={cash + credit}
-            />
+            <input type="text" name="id" id="id" min={Math.max(0, cash * -1)} />
             <button>Transfer</button>
           </>
         );
