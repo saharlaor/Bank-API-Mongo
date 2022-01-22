@@ -26,7 +26,7 @@ function Users() {
   const generateUserCards = () => {
     return results
       ? results.map((item) => {
-          return <Card item={item} />;
+          return <Card key={item._id} item={item} />;
         })
       : [];
   };
@@ -34,9 +34,7 @@ function Users() {
   return (
     <div className="Users">
       <h2>Users</h2>
-      <div className="search">
-        <div className="search__display">{generateUserCards()}</div>
-      </div>
+      <div className="search">{generateUserCards()}</div>
     </div>
   );
 }

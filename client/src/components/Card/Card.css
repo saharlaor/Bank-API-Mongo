@@ -1,4 +1,29 @@
-.Card {
-  display: inline-block;
+.Card > a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  background-color: #bce;
+  border-radius: 0.2rem;
 }
-/*# sourceMappingURL=a.css.map */
+
+.Card > a:hover {
+  background-color: #cdf;
+}
+
+.Card > a > h3 {
+  margin-bottom: 0.3rem;
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+/*# sourceMappingURL=Card.css.map */
