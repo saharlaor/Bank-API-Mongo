@@ -6,6 +6,7 @@ import "./UpdateForm.css";
 function UpdateForm({ user: { _id, name, cash, credit } }) {
   const [mode, setMode] = useState("deposit");
   const [amount, setAmount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("e");
   const navigate = useNavigate();
 
   const handleModeChange = (e) => {
@@ -19,7 +20,16 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
 
   const handleDepositClick = async (e) => {
     e.preventDefault();
+    if (amount < 0) return setErrorMessage("Invalid Amount");
     await api.put(`/users/deposit/${_id}`, { amount: parseInt(amount) });
+    navigate("/users");
+  };
+
+  const handleWithdrawClick = async (e) => {
+    e.preventDefault();
+    if (amount < 0 || amount > cash + credit)
+      return setErrorMessage("Invalid Amount");
+    await api.put(`/users/withdraw/${_id}`, { amount: parseInt(amount) });
     navigate("/users");
   };
 
@@ -55,7 +65,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
               min={0}
               max={cash + credit}
             />
-            <button>Withdraw</button>
+            <button onClick={handleWithdrawClick}>Withdraw</button>
           </>
         );
       case "credit":
@@ -122,6 +132,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
         <option value="transfer">Transfer</option>
       </select>
       <form action="">{generateForm()}</form>
+      <div className="error-message">{errorMessage}</div>
     </div>
   );
 }
