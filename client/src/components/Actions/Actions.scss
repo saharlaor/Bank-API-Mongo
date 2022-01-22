@@ -1,3 +1,24 @@
 .Actions {
   display: inline-block;
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 2rem;
+  form {
+    display: block;
+    width: fit-content;
+    margin: auto;
+  }
+  label {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  input {
+    padding: 3px;
+  }
+  button {
+    padding: 3px;
+    font-weight: 500;
+    width: 280px;
+  }
 }

@@ -1,3 +1,20 @@
 .UpdateForm {
   display: inline-block;
+  width: 100%;
+  & > select {
+    display: block;
+    width: 100%;
+    margin: 2rem 0;
+  }
+  label {
+    display: inline-block;
+    width: 80px;
+    margin-bottom: 1rem;
+  }
+  input {
+    width: 193px;
+  }
+  select {
+    padding: 3px;
+  }
 }

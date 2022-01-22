@@ -149,6 +149,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
               min={Math.max(0, cash * -1)}
               max={cash + credit}
             />
+            <br />
             <label htmlFor="id" autoFocus>
               ID:
             </label>
@@ -170,6 +171,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
                     </option>
                   ))}
             </select>
+            <br />
             <button onClick={handleTransferClick}>Transfer</button>
           </>
         );

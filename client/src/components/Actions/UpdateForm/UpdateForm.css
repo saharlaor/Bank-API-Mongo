@@ -1,4 +1,25 @@
 .UpdateForm {
   display: inline-block;
+  width: 100%;
+}
+
+.UpdateForm > select {
+  display: block;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.UpdateForm label {
+  display: inline-block;
+  width: 80px;
+  margin-bottom: 1rem;
+}
+
+.UpdateForm input {
+  width: 193px;
+}
+
+.UpdateForm select {
+  padding: 3px;
 }
 /*# sourceMappingURL=UpdateForm.css.map */
