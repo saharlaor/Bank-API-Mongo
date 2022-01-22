@@ -8,7 +8,7 @@ function NavBar() {
       <nav>
         <Link to="/">Home</Link>
         <Link to="/users">Users</Link>
-        <Link to="/actions">Actions</Link>
+        <Link to="/actions">Create</Link>
       </nav>
     </header>
   );
