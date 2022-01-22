@@ -7,9 +7,7 @@
       -ms-flex-direction: column;
           flex-direction: column;
   gap: 0.5rem;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 100%;
   padding: 1.5rem;
   text-decoration: none;
   color: #333;
@@ -22,8 +20,12 @@
 }
 
 .Card > a > h3 {
-  margin-bottom: 0.3rem;
+  display: inline-block;
+  padding-bottom: 0.5rem;
   font-size: 1.5rem;
-  margin-right: 0.5rem;
+  margin: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 /*# sourceMappingURL=Card.css.map */

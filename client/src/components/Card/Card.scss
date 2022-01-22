@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    width: fit-content;
+    width: 100%;
     padding: 1.5rem;
     text-decoration: none;
     color: #333;
@@ -13,9 +13,13 @@
       background-color: #cdf;
     }
     & > h3 {
-      margin-bottom: 0.3rem;
+      display: inline-block;
+      padding-bottom: 0.5rem;
       font-size: 1.5rem;
-      margin-right: 0.5rem;
+      margin: auto;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 }

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACV,OAAO,EAAE,YAAY;CACtB",
+    "sources": [
+        "UpdateForm.scss"
+    ],
+    "names": [],
+    "file": "UpdateForm.css"
+}

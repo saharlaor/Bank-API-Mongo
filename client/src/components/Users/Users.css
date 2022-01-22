@@ -11,8 +11,8 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -ms-grid-columns: (10rem)[auto-fit];
-      grid-template-columns: repeat(auto-fit, 10rem);
+  -ms-grid-columns: (15rem)[auto-fit];
+      grid-template-columns: repeat(auto-fit, 15rem);
   gap: 2rem;
   width: 100%;
   margin-top: 2rem;
