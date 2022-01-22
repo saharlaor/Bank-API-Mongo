@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../../api/api";
 import "./CreateForm.css";
 
 function CreateForm() {
   const [value, setValue] = useState("");
+  const navigate = useNavigate();
 
   const handleNameChange = ({ target }) => {
     setValue(target.value);
@@ -12,6 +14,7 @@ function CreateForm() {
   const handleCreateClick = async (e) => {
     e.preventDefault();
     await api.post("/users", { name: value });
+    navigate("/users");
   };
 
   return (
