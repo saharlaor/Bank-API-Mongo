@@ -1,11 +1,26 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../../api/api";
 import "./UpdateForm.css";
 
 function UpdateForm({ user: { _id, name, cash, credit } }) {
   const [mode, setMode] = useState("deposit");
+  const [amount, setAmount] = useState(0);
+  const navigate = useNavigate();
 
   const handleModeChange = (e) => {
     setMode(e.target.value);
+    setAmount(0);
+  };
+
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const handleDepositClick = async (e) => {
+    e.preventDefault();
+    await api.put(`/users/deposit/${_id}`, { amount: parseInt(amount) });
+    navigate("/users");
   };
 
   const generateForm = () => {
@@ -16,8 +31,14 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
             <label htmlFor="amount" autoFocus>
               Amount:
             </label>
-            <input type="number" name="amount" id="amount" min={0} />
-            <button>Deposit</button>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              onChange={handleAmountChange}
+              min={0}
+            />
+            <button onClick={handleDepositClick}>Deposit</button>
           </>
         );
       case "withdraw":
@@ -30,6 +51,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
               type="number"
               name="amount"
               id="amount"
+              onChange={handleAmountChange}
               min={0}
               max={cash + credit}
             />
@@ -46,6 +68,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
               type="number"
               name="amount"
               id="amount"
+              onChange={handleAmountChange}
               min={Math.max(0, cash * -1)}
               max={cash + credit}
             />
@@ -62,6 +85,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
               type="number"
               name="amount"
               id="amount"
+              onChange={handleAmountChange}
               min={Math.max(0, cash * -1)}
               max={cash + credit}
             />
