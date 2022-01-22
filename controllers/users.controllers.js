@@ -11,9 +11,9 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   try {
-    const user = Users.findOne({ _id: req.params.id });
+    const user = await Users.findOne({ _id: req.params.id });
     if (user._id) return res.send(user);
     throw Error({ status: 404, message: `User ${req.params.id} not found` });
   } catch (err) {
@@ -47,9 +47,9 @@ const createUser = (req, res) => {
   }
 };
 
-const makeDeposit = (req, res) => {
+const makeDeposit = async (req, res) => {
   try {
-    const user = Users.findOne({ _id: req.params.id });
+    const user = await Users.findOne({ _id: req.params.id });
     // If _id is empty there is no user
     if (!user._id) {
       throw Error({ status: 404, message: `User ${req.params.id} not found` });
@@ -66,9 +66,9 @@ const makeDeposit = (req, res) => {
   }
 };
 
-const updateUserCredit = (req, res) => {
+const updateUserCredit = async (req, res) => {
   try {
-    const user = Users.findOne({ _id: req.params.id });
+    const user = await Users.findOne({ _id: req.params.id });
     // If _id is empty there is no user
     if (!user._id) {
       throw Error({ status: 404, message: `User ${req.params.id} not found` });
@@ -85,9 +85,9 @@ const updateUserCredit = (req, res) => {
   }
 };
 
-const makeWithdraw = (req, res) => {
+const makeWithdraw = async (req, res) => {
   try {
-    const user = Users.findOne({ _id: req.params.id });
+    const user = await Users.findOne({ _id: req.params.id });
     // If _id is empty there is no user
     if (!user._id) {
       throw Error({ status: 404, message: `User ${req.params.id} not found` });
@@ -106,10 +106,10 @@ const makeWithdraw = (req, res) => {
   }
 };
 
-const makeTransfer = (req, res) => {
+const makeTransfer = async (req, res) => {
   try {
-    const fromUser = Users.findOne({ _id: req.body.fromID });
-    const toUser = Users.findOne({ _id: req.body.toID });
+    const fromUser = await Users.findOne({ _id: req.body.fromID });
+    const toUser = await Users.findOne({ _id: req.body.toID });
     if (!fromUser._id) {
       throw Error({
         status: 404,
