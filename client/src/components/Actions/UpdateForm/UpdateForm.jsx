@@ -8,6 +8,82 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
     setMode(e.target.value);
   };
 
+  const generateForm = () => {
+    switch (mode) {
+      case "deposit":
+        return (
+          <>
+            <label htmlFor="amount" autoFocus>
+              Amount:
+            </label>
+            <input type="number" name="amount" id="amount" min={0} />
+            <button>Deposit</button>
+          </>
+        );
+      case "withdraw":
+        return (
+          <>
+            <label htmlFor="amount" autoFocus>
+              Amount:
+            </label>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              min={0}
+              max={cash + credit}
+            />
+            <button>Withdraw</button>
+          </>
+        );
+      case "credit":
+        return (
+          <>
+            <label htmlFor="amount" autoFocus>
+              Amount:
+            </label>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              min={Math.max(0, cash * -1)}
+              max={cash + credit}
+            />
+            <button>Set Credit</button>
+          </>
+        );
+      case "transfer":
+        return (
+          <>
+            <label htmlFor="amount" autoFocus>
+              Amount:
+            </label>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              min={Math.max(0, cash * -1)}
+              max={cash + credit}
+            />
+            <label htmlFor="id" autoFocus>
+              ID:
+            </label>
+            <input
+              type="text"
+              name="id"
+              id="id"
+              min={Math.max(0, cash * -1)}
+              max={cash + credit}
+            />
+            <button>Transfer</button>
+          </>
+        );
+
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="UpdateForm">
       <h2>{name}</h2>
@@ -21,6 +97,7 @@ function UpdateForm({ user: { _id, name, cash, credit } }) {
         <option value="credit">Credit</option>
         <option value="transfer">Transfer</option>
       </select>
+      <form action="">{generateForm()}</form>
     </div>
   );
 }
