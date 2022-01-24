@@ -11,7 +11,7 @@
   "name": "bank-api-mongo",
   "description": "Bank API weekend project using NodeJS, Express &amp; JSON",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon ./server.js",

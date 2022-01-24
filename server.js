@@ -1,16 +1,8 @@
 // Imports
 const express = require("express");
 const cors = require("cors");
-const {
-  getAllUsers,
-  getUser,
-  createUser,
-  makeDeposit,
-  updateUserCredit,
-  makeWithdraw,
-  makeTransfer,
-} = require("./controllers/users.controllers");
 const path = require("path");
+const router = require("./routes/Users.routes");
 
 // Constants
 require("dotenv").config();
@@ -22,21 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.static(PUBLIC_PATH));
-
-// Endpoints
-// GET
-app.get("/api/users", getAllUsers);
-
-app.get("/api/users/:id", getUser);
-
-// POST
-app.post("/api/users", createUser);
-
-// PUT
-app.put("/api/users/deposit/:id", makeDeposit);
-app.put("/api/users/credit/:id", updateUserCredit);
-app.put("/api/users/withdraw/:id", makeWithdraw);
-app.put("/api/users/transfer/", makeTransfer);
+app.use(router);
 
 // Fallback
 app.get("*", (req, res) => {
