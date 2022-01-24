@@ -11,11 +11,11 @@
   "name": "bank-api-mongo",
   "description": "Bank API weekend project using NodeJS, Express &amp; JSON",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node ./index.js",
+    "start": "node ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon ./index.js",
+    "server": "nodemon ./server.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"

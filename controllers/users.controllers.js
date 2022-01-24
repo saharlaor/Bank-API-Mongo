@@ -126,10 +126,10 @@ const makeTransfer = async (req, res) => {
       throw Error({ status: 400, message: `Insufficient credit` });
     } else {
       fromUser.cash -= req.body.amount;
-      toUser.cash += req.body.amount;
-      res.status(200).send({ fromUser, toUser });
       fromUser.save();
+      toUser.cash += req.body.amount;
       toUser.save();
+      res.status(200).send({ fromUser, toUser });
     }
   } catch (err) {
     err.status
